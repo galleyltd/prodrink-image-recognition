@@ -5,7 +5,7 @@ import tempfile
 import os
 from PIL import Image
 
-src_path = "C:/Development/projects/prodrink-image-recognition/dataset/v1/"
+src_path = "C:/Development/projects/dataset/v1/"
 
 IMAGE_SIZE = 1800
 BINARY_THREHOLD = 180
@@ -70,16 +70,15 @@ def tricks(img_path, conf):
 
 for filename in os.listdir(src_path):
     f = open(filename + ".txt", 'w', encoding='utf8')
-    # for psm in [x for x in range(14) if x != 2 and x != 0]:
-    #     for oem in range(0, 3):
-    psm = 3
-    oem = 3
-    for lang in ['eng', 'rus', 'eng+rus', 'rus+eng']:
-        conf = '-psm {} -oem {} -l {} --tessdata-dir "C:/Program Files (x86)/Tesseract-OCR/tessdata/"'.format(
-            psm, oem, lang)
-        f.write(conf + '\n')
-        f.write(original(filename, conf) + '\n')
-        # f.write("---updated image------" + '\n')
-        # f.write(tricks(filename, conf) + '\n')
-        f.flush()
+    for psm in [1, 3, 4, 5, 6]:
+        for oem in range(0, 3):
+            for lang in ['eng']:
+            # for lang in ['eng', 'rus', 'eng+rus', 'rus+eng']:
+                conf = '-psm {} -oem {} -l {} --tessdata-dir "C:/Program Files (x86)/Tesseract-OCR/tessdata/"'.format(
+                    psm, oem, lang)
+                f.write(conf + '\n')
+                f.write(original(filename, conf) + '\n')
+                # f.write("---updated image------" + '\n')
+                # f.write(tricks(filename, conf) + '\n')
+                f.flush()
     f.close()
